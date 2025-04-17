@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(fontFamily: 'Poppins'),
           themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.splash,
+          initialRoute: AppRoutes.bank,
           // initialBinding: CurrencyBinding(),
           getPages: AppRouteManagement.pages,
         );
