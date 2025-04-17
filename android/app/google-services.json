@@ -1,0 +1,87 @@
+{
+  "project_info": {
+    "project_number": "473385735243",
+    "firebase_url": "https://aurify-2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "aurify-2",
+    "storage_bucket": "aurify-2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473385735243:android:c5571973cb3d358a0569ce",
+        "android_client_info": {
+          "package_name": "com.example.crystal_gold"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Bb_yOlhGvW_pLP3iln91ES7KLaVDu8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473385735243:android:69f50a30756bf5aa0569ce",
+        "android_client_info": {
+          "package_name": "com.example.fxg_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Bb_yOlhGvW_pLP3iln91ES7KLaVDu8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473385735243:android:a911ec28d60e24470569ce",
+        "android_client_info": {
+          "package_name": "com.example.yakoot_jewellery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Bb_yOlhGvW_pLP3iln91ES7KLaVDu8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473385735243:android:10945d0c31f029cc0569ce",
+        "android_client_info": {
+          "package_name": "com.tecnavis.fxg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Bb_yOlhGvW_pLP3iln91ES7KLaVDu8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
