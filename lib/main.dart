@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, screenType) {
         return GetMaterialApp(
           title: 'Crystal Gold',
-          theme: ThemeData(fontFamily: 'Poppins'),
+          // theme: ThemeData(fontFamily: 'Poppins'), 
           themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.bank,
+          initialRoute: AppRoutes.news,
           // initialBinding: CurrencyBinding(),
           getPages: AppRouteManagement.pages,
         );

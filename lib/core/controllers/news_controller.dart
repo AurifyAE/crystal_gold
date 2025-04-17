@@ -1,4 +1,3 @@
-// import 'package:fxg_app/app/core/constants/constants.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 
@@ -7,7 +6,7 @@ import '../models/news_model.dart';
 import 'dart:developer' as developer;
 
 class NewsController extends GetxController {
-  final RxList<NewsModel> newsList = <NewsModel>[].obs;
+  final RxList<NewsItem> newsList = <NewsItem>[].obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
 
@@ -25,7 +24,7 @@ class NewsController extends GetxController {
       errorMessage.value = '';
 
       final response = await _dio.get(
-        'https://api.aurify.ae/device/get-news/${KConstants.adminId}',
+        'https://api.aurify.ae/user/get-news/${KConstants.adminId}',
         options: Options(
           headers: {
             'X-Secret-Key': 'IfiuH/ko+rh/gekRvY4Va0s+aGYuGJEAOkbJbChhcqo=',
@@ -33,27 +32,40 @@ class NewsController extends GetxController {
         ),
       );
 
-      developer.log('Full News Response: ${response.data}',
+      developer.log('News Response Status: ${response.statusCode}',
           name: 'NewsController');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = response.data;
-
+        
         if (responseData['success'] == true && responseData['news'] != null) {
-          final List<dynamic> newsData = responseData['news']['news'] ?? [];
-
-          developer.log('Parsed News Data: $newsData', name: 'NewsController');
-
-          newsList.value =
-              newsData.map((json) => NewsModel.fromJson(json)).toList();
-
-          developer.log('News List Length: ${newsList.length}',
+          // Parse the full response
+          final newsResponse = NewsResponse.fromJson(responseData);
+          
+          // Flatten all news items from all containers into a single list
+          final List<NewsItem> allNewsItems = [];
+          
+          for (var container in newsResponse.news) {
+            allNewsItems.addAll(container.newsItems);
+          }
+          
+          // Sort by date (newest first)
+          allNewsItems.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          
+          developer.log('Total News Items: ${allNewsItems.length}', 
               name: 'NewsController');
+          
+          // Update the observable list
+          newsList.value = allNewsItems;
+          
+          if (allNewsItems.isEmpty) {
+            errorMessage.value = 'No news items available';
+          }
         } else {
-          errorMessage.value = 'No news available';
+          errorMessage.value = responseData['message'] ?? 'No news available';
         }
       } else {
-        errorMessage.value = 'Failed to load news';
+        errorMessage.value = 'Failed to load news: ${response.statusCode}';
       }
     } catch (e) {
       developer.log('Error fetching news: $e', name: 'NewsController');
