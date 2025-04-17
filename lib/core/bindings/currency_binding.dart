@@ -34,7 +34,7 @@ class CurrencyBinding implements Bindings {
         app: Firebase.app(),
         databaseURL:
             "https://aurify-2-default-rtdb.asia-southeast1.firebasedatabase.app",
-      ).ref('Alert_rate');
+      ).ref('Crystal_gold');
 
       debugPrint('Created Firebase reference at path: ${ref.path}');
 

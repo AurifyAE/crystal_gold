@@ -2,6 +2,10 @@ String icons = 'assets/icons';
 String images = 'assets/images';
 
 
+
+String kIcoin = '$images/coin_image.png';
+
+
 // icons
 
 String kiCall = '$icons/call_icon.svg';
