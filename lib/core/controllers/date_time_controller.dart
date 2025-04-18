@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class DateTimeController extends GetxController {
+  RxString formattedDay = ''.obs;
   RxString formattedDate = ''.obs;
   RxString formattedTime = ''.obs;
 
@@ -17,7 +18,8 @@ class DateTimeController extends GetxController {
 
   void _updateDateTime() {
     DateTime now = DateTime.now();
-    formattedDate.value = DateFormat('EEEE, MMM d').format(now);
+    formattedDay.value = DateFormat('EEEE').format(now);
+    formattedDate.value = DateFormat('MMM d').format(now);
     formattedTime.value = DateFormat('HH:mm').format(now);
   }
 }

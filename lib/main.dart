@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import 'core/bindings/currency_binding.dart';
 import 'core/routes/app_route_management.dart';
 import 'core/routes/app_routes.dart';
 import 'firebase_options.dart';
@@ -75,8 +76,8 @@ class MyApp extends StatelessWidget {
           // theme: ThemeData(fontFamily: 'Poppins'), 
           themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.rateAlert,
-          // initialBinding: CurrencyBinding(),
+          initialRoute: AppRoutes.splash,
+          initialBinding: CurrencyBinding(),
           getPages: AppRouteManagement.pages,
         );
       },

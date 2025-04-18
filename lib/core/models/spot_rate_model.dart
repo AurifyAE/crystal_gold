@@ -133,22 +133,22 @@ class Info {
   factory Info.fromMap(Map<String, dynamic> json) => Info(
         id: json["_id"],
         createdBy: json["createdBy"],
-        silverAskSpread: json["silverAskSpread"].toDouble(),
-        silverBidSpread: json["silverBidSpread"].toDouble(),
-        goldAskSpread: json["goldAskSpread"].toDouble(),
-        goldBidSpread: json["goldBidSpread"].toDouble(),
-        copperAskSpread: json["copperAskSpread"].toDouble(),
-        copperBidSpread: json["copperBidSpread"].toDouble(),
-        platinumAskSpread: json["platinumAskSpread"].toDouble(),
-        platinumBidSpread: json["platinumBidSpread"].toDouble(),
-        goldLowMargin: json["goldLowMargin"].toDouble(),
-        goldHighMargin: json["goldHighMargin"].toDouble(),
-        silverLowMargin: json["silverLowMargin"].toDouble(),
-        silverHighMargin: json["silverHighMargin"].toDouble(),
-        copperLowMargin: json["copperLowMargin"].toDouble(),
-        copperHighMargin: json["copperHighMargin"].toDouble(),
-        platinumLowMargin: json["platinumLowMargin"].toDouble(),
-        platinumHighMargin: json["platinumHighMargin"].toDouble(),
+        silverAskSpread: _parseToDouble(json["silverAskSpread"]),
+        silverBidSpread: _parseToDouble(json["silverBidSpread"]),
+        goldAskSpread: _parseToDouble(json["goldAskSpread"]),
+        goldBidSpread: _parseToDouble(json["goldBidSpread"]),
+        copperAskSpread: _parseToDouble(json["copperAskSpread"]),
+        copperBidSpread: _parseToDouble(json["copperBidSpread"]),
+        platinumAskSpread: _parseToDouble(json["platinumAskSpread"]),
+        platinumBidSpread: _parseToDouble(json["platinumBidSpread"]),
+        goldLowMargin: _parseToDouble(json["goldLowMargin"]),
+        goldHighMargin: _parseToDouble(json["goldHighMargin"]),
+        silverLowMargin: _parseToDouble(json["silverLowMargin"]),
+        silverHighMargin: _parseToDouble(json["silverHighMargin"]),
+        copperLowMargin: _parseToDouble(json["copperLowMargin"]),
+        copperHighMargin: _parseToDouble(json["copperHighMargin"]),
+        platinumLowMargin: _parseToDouble(json["platinumLowMargin"]),
+        platinumHighMargin: _parseToDouble(json["platinumHighMargin"]),
         commodities: List<Commodity>.from(
             json["commodities"].map((x) => Commodity.fromMap(x))),
         v: json["__v"],
@@ -178,9 +178,17 @@ class Info {
       };
 }
 
+// Improved helper function to handle null, int, and double values
+double _parseToDouble(dynamic value) {
+  if (value == null) return 0.0;
+  if (value is int) return value.toDouble();
+  if (value is double) return value;
+  return 0.0; // Default fallback value
+}
+
 class Commodity {
   final String metal;
-  final int purity;
+  final dynamic purity; // Changed to dynamic to handle decimal purities like 999.9
   final int unit;
   final String weight;
   final int buyPremium;
@@ -203,7 +211,7 @@ class Commodity {
 
   Commodity copyWith({
     String? metal,
-    int? purity,
+    dynamic purity,
     int? unit,
     String? weight,
     int? buyPremium,

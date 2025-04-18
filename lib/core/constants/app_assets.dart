@@ -4,6 +4,8 @@ String images = 'assets/images';
 
 
 String kIcoin = '$images/coin_image.png';
+String kIgold = '$images/gold_bar.png';
+String kIsilver = '$images/silver_bar.png'; 
 
 
 // icons

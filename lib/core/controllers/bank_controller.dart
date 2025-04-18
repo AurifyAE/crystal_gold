@@ -17,7 +17,7 @@ class BankController extends GetxController {
   final Rx<BankResponse?> bankResponse = Rx<BankResponse?>(null);
   
   // URL for the API
-  final String apiUrl = 'https://api.aurify.ae/user/get-banks/67fe1a27a7ef7568048c4cd2';
+  final String apiUrl = 'https://api.aurify.ae/user/get-banks/678fd15ab4011989ef4e57d4';
   
   Future<void> fetchBankDetails() async {
     try {
