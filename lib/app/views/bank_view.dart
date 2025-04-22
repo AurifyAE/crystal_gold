@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-// import 'package:fxg_app/app/core/utils/app_assets.dart';
-// import '../controllers/bank_controller.dart';
 import '../../core/controllers/bank_controller.dart';
-import 'bank_details_view.dart';
 
 class BankView extends StatelessWidget {
   const BankView({super.key});
@@ -17,15 +14,13 @@ class BankView extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
         automaticallyImplyLeading: false,
-
         middle: Text('Bank Details'),
-        // iOS navigation bars are usually lighter
         backgroundColor: CupertinoColors.systemBackground,
       ),
       backgroundColor: CupertinoColors.systemBackground,
       child: SafeArea(
         child: Center(
-          child: Column(
+          child: Obx(() => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ClipRRect(
@@ -49,19 +44,33 @@ class BankView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              CupertinoButton.filled(
-                borderRadius: BorderRadius.circular(10),
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                onPressed: () async {
-                  await controller.fetchBankDetails();
-                  // Using iOS-style push transition
-                  Get.to(() => const BankDetailsView(), 
-                    transition: Transition.cupertino);
-                },
-                child: const Text('Get Bank Details'),
-              )
+              
+              // Show error message if there's an error
+              if (controller.hasError.value)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    controller.errorMessage.value,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: CupertinoColors.systemRed,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                
+              const SizedBox(height: 15),
+              
+              controller.isLoading.value
+                ? const CupertinoActivityIndicator(radius: 15)
+                : CupertinoButton.filled(
+                    borderRadius: BorderRadius.circular(10),
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                    onPressed: () => controller.fetchBankDetails(),
+                    child: const Text('Get Bank Details'),
+                  )
             ],
-          ),
+          )),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart'; // Import for number formatting
 
 import '../../../core/controllers/live_controller.dart';
 import '../../../core/controllers/live_rate_controller.dart';
@@ -76,6 +77,9 @@ class CommoditiesList extends StatelessWidget {
         liveRateController.marketData['Gold'] as Map<String, dynamic>?;
     final spotRateModel = liveController.spotRateModel.value;
     final commodityService = CommodityCalculator();
+    
+    // Initialize formatter for price values
+    final priceFormatter = NumberFormat('#,##0.00', 'en_US');
 
     if (goldData == null || spotRateModel == null) {
       return Center(
@@ -108,20 +112,22 @@ class CommoditiesList extends StatelessWidget {
         calculatedBidPrice + 0.5 + spotRateModel.info.goldAskSpread;
 
     final commodities = spotRateModel.info.commodities;
-    final gmGold750 = commodityService.findOrCreateCommodity(commodities, 'Gold', 'GM', 750);
+    final ttbGold999 = commodityService.findOrCreateCommodity(commodities, 'Gold', 'TTB', 999);
     final gmGold999 = commodityService.findOrCreateCommodity(commodities, 'Gold', 'GM', 999);
     final gmGold9999 = commodityService.findOrCreateCommodity(commodities, 'Gold', 'GM', 9999);
+    final kgGold995 = commodityService.findOrCreateCommodity(commodities, 'Gold', 'KG', 995);
+    final kgGold9999 = commodityService.findOrCreateCommodity(commodities, 'Gold', 'KG', 9999);
 
     final commoditiesList = [
       {
-        'name': 'Gold 750',
-        'unit': '1 GM',
+        'name': 'Gold Ten TOLA',
+        'unit': '1 TTB',
         'sell': double.parse(commodityService.calculateCommodityValue(
             calculatedAskPrice,
-            gmGold750.sellPremium,
-            gmGold750.weight,
-            gmGold750.purity,
-            gmGold750.sellCharge))
+            ttbGold999.sellPremium,
+            ttbGold999.weight,
+            ttbGold999.purity,
+            ttbGold999.sellCharge))
       },
       {
         'name': 'Gold 999',
@@ -142,6 +148,26 @@ class CommoditiesList extends StatelessWidget {
             gmGold9999.weight,
             gmGold9999.purity,
             gmGold9999.sellCharge))
+      },
+      {
+        'name': 'Gold 995',
+        'unit': '1 KG',
+        'sell': double.parse(commodityService.calculateCommodityValue(
+            calculatedAskPrice,
+            kgGold995.sellPremium,
+            kgGold995.weight,
+            kgGold995.purity,
+            kgGold995.sellCharge))
+      },
+      {
+        'name': 'Gold 9999',
+        'unit': '1 KG',
+        'sell': double.parse(commodityService.calculateCommodityValue(
+            calculatedAskPrice,
+            kgGold9999.sellPremium,
+            kgGold9999.weight,
+            kgGold9999.purity,
+            kgGold9999.sellCharge))
       },
     ];
 
@@ -169,6 +195,7 @@ class CommoditiesList extends StatelessWidget {
                   commodity['name'] as String,
                   commodity['unit'] as String,
                   commodity['sell'] as double,
+                  priceFormatter, // Pass the formatter
                   index,
                   screenWidth,
                   screenHeight,
@@ -239,7 +266,8 @@ class CommoditiesList extends StatelessWidget {
   Widget _buildCommodityRow(
     String name, 
     String unit, 
-    double sell, 
+    double sell,
+    NumberFormat formatter, // Add formatter parameter
     int index, 
     double screenWidth,
     double screenHeight) {
@@ -258,15 +286,15 @@ class CommoditiesList extends StatelessWidget {
             flex: 3,
             child: Row(
               children: [
-                Container(
-                  width: screenWidth * 0.02,
-                  height: screenHeight * 0.035,
-                  decoration: BoxDecoration(
-                    color: _getCommodityColor(name),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                SizedBox(width: screenWidth * 0.03),
+                // Container(
+                //   width: screenWidth * 0.02,
+                //   height: screenHeight * 0.035,
+                //   decoration: BoxDecoration(
+                //     color: _getCommodityColor(name),
+                //     borderRadius: BorderRadius.circular(4),
+                //   ),
+                // ),
+                // SizedBox(width: screenWidth * 0.03),
                 Expanded(
                   child: Text(
                     name,
@@ -318,7 +346,7 @@ class CommoditiesList extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                "\$ ${sell.toStringAsFixed(2)}",
+                formatter.format(sell), // Format the price with commas
                 style: TextStyle(
                   color: CupertinoColors.extraLightBackgroundGray, 
                   fontWeight: FontWeight.w600,
@@ -333,16 +361,16 @@ class CommoditiesList extends StatelessWidget {
     );
   }
   
-  Color _getCommodityColor(String name) {
-    if (name.contains('750')) {
-      return CupertinoColors.systemYellow;
-    } else if (name.contains('999')) {
-      return CupertinoColors.systemOrange;
-    } else if (name.contains('9999')) {
-      return CupertinoColors.activeOrange;
-    }
-    return CupertinoColors.systemBlue;
-  }
+  // Color _getCommodityColor(String name) {
+  //   if (name.contains('750')) {
+  //     return CupertinoColors.systemYellow;
+  //   } else if (name.contains('999')) {
+  //     return CupertinoColors.systemOrange;
+  //   } else if (name.contains('9999')) {
+  //     return CupertinoColors.activeOrange;
+  //   }
+  //   return CupertinoColors.systemBlue;
+  // }
   
   // Helper method for responsive font sizing
   double _getResponsiveFontSize(double screenWidth, double baseSize) {
