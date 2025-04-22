@@ -19,6 +19,8 @@ class RateAlertView extends StatelessWidget {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.systemGroupedBackground,
       navigationBar: const CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+
         middle: Text(
           'Set Gold Rate Alert',
           style: TextStyle(

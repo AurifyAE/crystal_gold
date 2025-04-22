@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-// import 'package:fxg_app/app/core/constants/constants.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 

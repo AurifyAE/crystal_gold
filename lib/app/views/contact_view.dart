@@ -28,6 +28,8 @@ class ContactView extends GetView<ContactController> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+
         middle: Text(
           '24/7 Customer Support',
           style: TextStyle(

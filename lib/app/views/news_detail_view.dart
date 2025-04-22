@@ -14,6 +14,8 @@ class NewsDetailsView extends StatelessWidget {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.systemBackground,
       navigationBar: CupertinoNavigationBar(
+        // automaticallyImplyLeading: false,
+
         previousPageTitle: 'News',
         backgroundColor: CupertinoColors.systemBackground,
         border: const Border(bottom: BorderSide(color: CupertinoColors.separator, width: 0.5)),

@@ -16,6 +16,8 @@ class BankView extends StatelessWidget {
     
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+
         middle: Text('Bank Details'),
         // iOS navigation bars are usually lighter
         backgroundColor: CupertinoColors.systemBackground,

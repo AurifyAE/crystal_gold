@@ -4,10 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
 
-// import '../core/constant/constants.dart';
-// import '../core/constants/constants.dart';
-// import '../core/utils/failure.dart';
-// import '../core/utils/type_def.dart';
+
 import '../constants/endpoints.dart';
 import '../constants/failure.dart';
 import '../constants/type_def.dart';

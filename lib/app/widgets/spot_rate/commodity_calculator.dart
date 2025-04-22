@@ -7,43 +7,58 @@ import '../../../core/models/commodity.dart';
 
 class CommodityCalculator {
   Commodity findOrCreateCommodity(
-      List<dynamic> commodities, String metal, String weight, int purity,
-      {double? premium}) {
-    dev.log('🔍 Finding commodity: metal=$metal, weight=$weight, purity=$purity, premium=$premium');
-    
-    dynamic foundCommodity;
+    List<dynamic> commodities, String metal, String weight, int purity,
+    {double? premium}) {
+  dev.log('🔍 Finding commodity: metal=$metal, weight=$weight, purity=$purity, premium=$premium');
+  
+  dynamic foundCommodity;
 
-    try {
-      // Simple search for any commodity
-      for (var commodity in commodities) {
-        if (commodity.metal == metal && commodity.weight == weight) {
-          dev.log('✅ Found exact match for ${commodity.metal}, ${commodity.weight}');
-          return Commodity.fromDynamic(commodity);
-        }
+  try {
+    // First try to find an exact match by metal, weight AND purity
+    for (var commodity in commodities) {
+      if (commodity.metal == metal && 
+          commodity.weight == weight && 
+          commodity.purity == purity) {
+        dev.log('✅ Found exact match for ${commodity.metal}, ${commodity.weight}, ${commodity.purity}');
+        return Commodity.fromDynamic(commodity);
       }
+    }
+    
+    // If no exact match by purity, look for metal and weight match
+    for (var commodity in commodities) {
+      if (commodity.metal == metal && commodity.weight == weight) {
+        dev.log('✅ Found match for ${commodity.metal}, ${commodity.weight}');
+        foundCommodity = commodity;
+        break;
+      }
+    }
 
+    // If still not found, search for closest match
+    if (foundCommodity == null) {
       dev.log('🔎 No exact match found, searching for closest match');
       foundCommodity = commodities.firstWhere(
           (c) => c.metal == metal && (c.weight == weight || weight == "GM"),
           orElse: () => commodities.firstWhere((c) => c.metal == metal,
               orElse: () => commodities.first));
-    } catch (e) {
-      dev.log('❌ Error finding commodity: $e');
-      foundCommodity = commodities.first;
     }
-
-    dev.log('📊 Using base commodity: ${foundCommodity.metal}, ${foundCommodity.weight}, ${foundCommodity.purity}');
-    Commodity baseCommodity = Commodity.fromDynamic(foundCommodity);
-
-    // Remove buy premium for KGBAR
-    double? finalPremium = weight == "KGBAR" ? 0 : premium;
-    
-    Commodity result = baseCommodity.copyWith(
-        purity: purity, weight: weight, buyPremium: finalPremium);
-    dev.log('🆕 Created new commodity: ${result.metal}, ${result.weight}, ${result.purity}, premium=${result.buyPremium}');
-    
-    return result;
+  } catch (e) {
+    dev.log('❌ Error finding commodity: $e');
+    foundCommodity = commodities.first;
   }
+
+  dev.log('📊 Using base commodity: ${foundCommodity.metal}, ${foundCommodity.weight}, ${foundCommodity.purity}');
+  Commodity baseCommodity = Commodity.fromDynamic(foundCommodity);
+
+  // Remove buy premium for KGBAR
+  double? finalPremium = weight == "KGBAR" ? 0 : premium;
+  
+  // Always create a new commodity with the specified purity
+  Commodity result = baseCommodity.copyWith(
+      purity: purity, weight: weight, buyPremium: finalPremium);
+  dev.log('🆕 Created new commodity: ${result.metal}, ${result.weight}, ${result.purity}, premium=${result.buyPremium}');
+  
+  return result;
+}
 
   double calculatePurityPower(dynamic purity) {
     String purityStr = purity.toString();

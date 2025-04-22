@@ -6,10 +6,8 @@ import 'package:firebase_database/firebase_database.dart';
 import '../constants/price_calculator.dart';
 import '../controllers/live_rate_controller.dart';
 import '../controllers/live_controller.dart';
-// import '../core/utils/price_calculator.dart';
 import '../models/spot_rate_model.dart';
 import '../repositories/notification_service.dart';
-// import '../repositories/notification_service.dart';
 
 class CurrencyController extends GetxController {
   final LiveRateController _liveRateController;

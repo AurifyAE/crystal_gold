@@ -24,6 +24,8 @@ class NewsView extends StatelessWidget {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.systemBackground,
       navigationBar: const CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+
         middle: Text('Breaking News'),
         brightness: Brightness.light,
         backgroundColor: CupertinoColors.systemBackground,

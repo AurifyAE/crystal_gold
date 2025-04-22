@@ -17,6 +17,7 @@ class BankDetailsView extends StatelessWidget {
     
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
+        // automaticallyImplyLeading: false,
         middle: const Text('Bank Details'),
         backgroundColor: CupertinoColors.systemBackground,
         previousPageTitle: 'Back', // iOS-style back button text

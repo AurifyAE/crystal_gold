@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 // import '../core/constant/constants.dart';
-// import '../core/constants/constants.dart';
 import '../constants/endpoints.dart';
 import '../models/commodity_model.dart';
 import '../models/server_details_model.dart';
@@ -113,7 +112,7 @@ class LiveRateController extends GetxController {
           log('Server initialized');
         } catch (e) {
           log("Error fetching commodity array: $e");
-          _requestMarketData(["Gold"]);
+          _requestMarketData(["Gold", "Silver"]);
         }
       });
 
@@ -140,41 +139,37 @@ class LiveRateController extends GetxController {
     }
   }
 
-void _handleMarketData(dynamic data) {
-  try {
-    if (data is List) {
-      // Handle array of market data
-      for (var item in data) {
-        if (item is Map<String, dynamic> && item['symbol'] is String) {
-          Map<String, dynamic> processedData = Map<String, dynamic>.from(item);
-          
-          // Process number values
-          processedData.forEach((key, value) {
-            if (value is num && value is! double) {
-              processedData[key] = value.toDouble();
-            }
-          });
-          
-          marketData[processedData['symbol']] = processedData;
+  void _handleMarketData(dynamic data) {
+    try {
+      if (data is Map<String, dynamic> && data['symbol'] is String) {
+        Map<String, dynamic> processedData = Map<String, dynamic>.from(data);
+
+        processedData.forEach((key, value) {
+          if (value is num && value is! double) {
+            processedData[key] = value.toDouble();
+          }
+        });
+
+        marketData[processedData['symbol']] = processedData;
+
+        if (processedData['bid'] == 0.0) {
+          _showMaintenanceAlert();
         }
+
+        try {
+          liveRateModel.value = LiveRateModel.fromJson(marketData);
+
+          _checkBidsAndShowAlert();
+        } catch (e) {
+          log("❌ Error parsing market data to model: $e");
+        }
+      } else {
+        log("❗ Invalid market data format: ${jsonEncode(data)}");
       }
-      
-      try {
-        liveRateModel.value = LiveRateModel.fromJson(marketData);
-        _checkBidsAndShowAlert();
-      } catch (e) {
-        log("❌ Error parsing market data to model: $e");
-      }
-    } else if (data is Map<String, dynamic> && data['symbol'] is String) {
-      // Original code for handling single object
-      // ...
-    } else {
-      log("❗ Invalid market data format: ${jsonEncode(data)}");
+    } catch (e) {
+      log("❌ Exception in handling market data: $e");
     }
-  } catch (e) {
-    log("❌ Exception in handling market data: $e");
   }
-}
 
   void _checkBidsAndShowAlert() {
     if (liveRateModel.value != null) {
