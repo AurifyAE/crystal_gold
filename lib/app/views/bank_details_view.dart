@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 
 import '../../core/controllers/bank_controller.dart';
 import '../widgets/bank/ios_card.dart';
-// import '../controllers/bank_controller.dart';
-// import '../models/bank_model.dart';
 
 class BankDetailsView extends StatelessWidget {
   const BankDetailsView({Key? key}) : super(key: key);
@@ -17,7 +15,6 @@ class BankDetailsView extends StatelessWidget {
     
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        // automaticallyImplyLeading: false,
         middle: const Text('Bank Details'),
         backgroundColor: CupertinoColors.systemBackground,
         previousPageTitle: 'Back', // iOS-style back button text
@@ -49,8 +46,38 @@ class BankDetailsView extends StatelessWidget {
             );
           }
           
-          if (controller.bankResponse.value == null) {
-            return const Center(child: Text('No bank details available'));
+          if (controller.bankResponse.value == null || 
+              controller.bankResponse.value!.bankInfo.bankDetails.isEmpty) {
+            // Display empty state with icon and text
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(
+                    CupertinoIcons.building_2_fill,
+                    size: 70,
+                    color: CupertinoColors.systemGrey,
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'No bank details available',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: CupertinoColors.systemGrey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Your bank information will appear here',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: CupertinoColors.systemGrey,
+                    ),
+                  ),
+                ],
+              ),
+            );
           }
           
           final bankDetails = controller.bankResponse.value!.bankInfo.bankDetails;

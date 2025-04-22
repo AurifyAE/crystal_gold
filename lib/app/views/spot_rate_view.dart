@@ -12,6 +12,14 @@ class SpotRateView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions for responsive calculations
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    
+    // Calculate responsive paddings and sizes
+    final sidePadding = screenWidth * 0.04; // 4% of screen width
+    final sectionSpacing = screenHeight * 0.01; // 1% of screen height
+    
     final upgrader = Upgrader(
       durationUntilAlertAgain: const Duration(days: 3),
       showIgnore: true,
@@ -25,7 +33,7 @@ class SpotRateView extends StatelessWidget {
         upgrader: upgrader,
         child: SafeArea(
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -38,33 +46,45 @@ class SpotRateView extends StatelessWidget {
             ),
             child: Column(
               children: [
+                // Date and Time widget with responsive padding
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: sidePadding, 
+                    vertical: screenHeight * 0.01
+                  ),
                   child: DateTimeWidget(),
                 ),
                 
-                // Market rates section
+                // Market rates section - flexible ratio based on screen size
                 Expanded(
-                  flex: 4,
+                  flex: screenHeight < 700 ? 5 : 4, // Adjust ratio for smaller screens
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 12, bottom: 8),
+                    padding: EdgeInsets.only(
+                      top: sectionSpacing, 
+                      bottom: sectionSpacing * 0.8,
+                      left: sidePadding * 0.8,
+                      right: sidePadding * 0.8
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 20, bottom: 8),
+                          padding: EdgeInsets.only(
+                            left: sidePadding * 0.5, 
+                            bottom: sectionSpacing * 0.8
+                          ),
                           child: Row(
-                            children: const [
+                            children: [
                               Icon(
                                 CupertinoIcons.chart_bar_alt_fill,
                                 color: CupertinoColors.activeBlue,
-                                size: 18,
+                                size: _getAdaptiveIconSize(screenWidth),
                               ),
-                              SizedBox(width: 8),
+                              SizedBox(width: screenWidth * 0.02),
                               Text(
                                 "LIVE MARKET RATES",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: _getAdaptiveFontSize(screenWidth, 16),
                                   fontWeight: FontWeight.w600,
                                   color: CupertinoColors.white,
                                   letterSpacing: 0.5,
@@ -79,28 +99,35 @@ class SpotRateView extends StatelessWidget {
                   ),
                 ),
                 
-                // Commodities section
+                // Commodities section - flexible ratio based on screen size
                 Expanded(
-                  flex: 5,
+                  flex: screenHeight < 700 ? 6 : 5, // Adjust ratio for smaller screens
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 12),
+                    padding: EdgeInsets.only(
+                      top: sectionSpacing,
+                      left: sidePadding * 0.8,
+                      right: sidePadding * 0.8
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 20, bottom: 0),
+                          padding: EdgeInsets.only(
+                            left: sidePadding * 0.5, 
+                            bottom: sectionSpacing * 0.5
+                          ),
                           child: Row(
-                            children: const [
+                            children: [
                               Icon(
                                 CupertinoIcons.money_dollar_circle_fill,
                                 color: CupertinoColors.activeGreen,
-                                size: 18,
+                                size: _getAdaptiveIconSize(screenWidth),
                               ),
-                              SizedBox(width: 8),
+                              SizedBox(width: screenWidth * 0.02),
                               Text(
                                 "COMMODITY PRICES",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: _getAdaptiveFontSize(screenWidth, 16),
                                   fontWeight: FontWeight.w600,
                                   color: CupertinoColors.white,
                                   letterSpacing: 0.5,
@@ -114,9 +141,6 @@ class SpotRateView extends StatelessWidget {
                     ),
                   ),
                 ),
-                
-                // Footer
-                  
               ],
             ),
           ),
@@ -124,4 +148,18 @@ class SpotRateView extends StatelessWidget {
       ),
     );
   }
-}
+  double _getAdaptiveFontSize(double screenWidth, double baseSize) {
+    if (screenWidth < 320) return baseSize * 0.8;
+    if (screenWidth < 375) return baseSize * 0.9;
+    if (screenWidth > 500) return baseSize * 1.1;
+    return baseSize;
+  }
+  
+  // Helper method to get adaptive icon sizes
+  double _getAdaptiveIconSize(double screenWidth) {
+    if (screenWidth < 320) return 16;
+    if (screenWidth < 375) return 17;
+    if (screenWidth > 500) return 20;
+    return 18;
+  }
+  }

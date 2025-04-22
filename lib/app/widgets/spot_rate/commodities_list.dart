@@ -11,11 +11,14 @@ class CommoditiesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    
     final liveRateController = Get.put(LiveRateController());
     final liveController = Get.put(LiveController());
 
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(screenWidth * 0.03), // 3% of screen width
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -35,26 +38,26 @@ class CommoditiesList extends StatelessWidget {
                 !liveRateController.marketData.containsKey('Gold');
 
             return isLoading
-                ? _buildLoadingState()
-                : _buildCommodityList(liveRateController, liveController);
+                ? _buildLoadingState(screenWidth)
+                : _buildCommodityList(liveRateController, liveController, screenWidth, screenHeight);
           },
         ),
       ),
     );
   }
   
-  Widget _buildLoadingState() {
+  Widget _buildLoadingState(double screenWidth) {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CupertinoActivityIndicator(radius: 16),
-          const SizedBox(height: 16),
+          CupertinoActivityIndicator(radius: screenWidth * 0.04), // Responsive spinner
+          SizedBox(height: screenWidth * 0.04),
           Text(
             "Loading commodities data...",
             style: TextStyle(
               color: CupertinoColors.systemGrey,
-              fontSize: 14,
+              fontSize: _getResponsiveFontSize(screenWidth, 14),
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -64,7 +67,11 @@ class CommoditiesList extends StatelessWidget {
   }
 
   Widget _buildCommodityList(
-      LiveRateController liveRateController, LiveController liveController) {
+      LiveRateController liveRateController, 
+      LiveController liveController,
+      double screenWidth,
+      double screenHeight) {
+      
     final goldData =
         liveRateController.marketData['Gold'] as Map<String, dynamic>?;
     final spotRateModel = liveController.spotRateModel.value;
@@ -78,14 +85,14 @@ class CommoditiesList extends StatelessWidget {
             Icon(
               CupertinoIcons.exclamationmark_circle,
               color: CupertinoColors.systemGrey,
-              size: 36,
+              size: screenWidth * 0.09,
             ),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: screenHeight * 0.02),
+            Text(
               'No data available',
               style: TextStyle(
                 color: CupertinoColors.systemGrey,
-                fontSize: 16,
+                fontSize: _getResponsiveFontSize(screenWidth, 16),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -143,17 +150,18 @@ class CommoditiesList extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildHeaderRow(),
+          _buildHeaderRow(screenWidth),
           Flexible(
             child: ListView.separated(
               padding: EdgeInsets.zero,
               itemCount: commoditiesList.length,
+              shrinkWrap: true,
               separatorBuilder: (context, index) => Divider(
                 height: 1,
                 thickness: 0.5,
                 color: CupertinoColors.systemGrey5.withOpacity(0.3),
-                indent: 16,
-                endIndent: 16,
+                indent: screenWidth * 0.04,
+                endIndent: screenWidth * 0.04,
               ),
               itemBuilder: (context, index) {
                 final commodity = commoditiesList[index];
@@ -162,19 +170,23 @@ class CommoditiesList extends StatelessWidget {
                   commodity['unit'] as String,
                   commodity['sell'] as double,
                   index,
+                  screenWidth,
+                  screenHeight,
                 );
               },
             ),
           ),
-          // _buildFooterInfo(),
         ],
       ),
     );
   }
 
-  Widget _buildHeaderRow() {
+  Widget _buildHeaderRow(double screenWidth) {
     return Container( 
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+      padding: EdgeInsets.symmetric(
+        vertical: screenWidth * 0.04, 
+        horizontal: screenWidth * 0.05
+      ),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.08),
         border: Border(
@@ -182,7 +194,7 @@ class CommoditiesList extends StatelessWidget {
         ),
       ),
       child: Row(
-        children: const [
+        children: [
           Expanded(
             flex: 3,
             child: Text(
@@ -190,7 +202,7 @@ class CommoditiesList extends StatelessWidget {
               style: TextStyle(
                 color: CupertinoColors.white,
                 fontWeight: FontWeight.w600,
-                fontSize: 14,
+                fontSize: _getResponsiveFontSize(screenWidth, 14),
               ),
             ),
           ),
@@ -201,7 +213,7 @@ class CommoditiesList extends StatelessWidget {
               style: TextStyle(
                 color: CupertinoColors.white,
                 fontWeight: FontWeight.w600,
-                fontSize: 14,
+                fontSize: _getResponsiveFontSize(screenWidth, 14),
               ),
               textAlign: TextAlign.center,
             ),
@@ -213,7 +225,7 @@ class CommoditiesList extends StatelessWidget {
               style: TextStyle(
                 color: CupertinoColors.white,
                 fontWeight: FontWeight.w600,
-                fontSize: 14,
+                fontSize: _getResponsiveFontSize(screenWidth, 14),
               ),
               textAlign: TextAlign.right,
             ),
@@ -223,9 +235,20 @@ class CommoditiesList extends StatelessWidget {
     );
   }
 
-  Widget _buildCommodityRow(String name, String unit, double sell, int index) {
+
+  Widget _buildCommodityRow(
+    String name, 
+    String unit, 
+    double sell, 
+    int index, 
+    double screenWidth,
+    double screenHeight) {
+      
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+      padding: EdgeInsets.symmetric(
+        vertical: screenHeight * 0.02, 
+        horizontal: screenWidth * 0.05
+      ),
       color: index.isEven 
           ? Colors.white.withOpacity(0.03) 
           : Colors.white.withOpacity(0.05),
@@ -236,22 +259,22 @@ class CommoditiesList extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 8,
-                  height: 28,
+                  width: screenWidth * 0.02,
+                  height: screenHeight * 0.035,
                   decoration: BoxDecoration(
                     color: _getCommodityColor(name),
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: screenWidth * 0.03),
                 Expanded(
                   child: Text(
                     name,
                     overflow: TextOverflow.ellipsis, 
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: CupertinoColors.white,
                       fontWeight: FontWeight.w500,
-                      fontSize: 16,
+                      fontSize: _getResponsiveFontSize(screenWidth, 16),
                     ),
                   ),
                 ),
@@ -261,7 +284,10 @@ class CommoditiesList extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              padding: EdgeInsets.symmetric(
+                vertical: screenHeight * 0.005, 
+                horizontal: screenWidth * 0.02
+              ),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(4),
@@ -273,10 +299,10 @@ class CommoditiesList extends StatelessWidget {
               child: Text(
                 unit,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   color: CupertinoColors.systemGrey,
                   fontWeight: FontWeight.w500,
-                  fontSize: 14,
+                  fontSize: _getResponsiveFontSize(screenWidth, 14),
                 ),
               ),
             ),
@@ -284,17 +310,19 @@ class CommoditiesList extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+              padding: EdgeInsets.symmetric(
+                vertical: screenHeight * 0.008, 
+                horizontal: screenWidth * 0.03
+              ),
               decoration: BoxDecoration(
-                // color: CupertinoColors.activeBlue.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
                 "\$ ${sell.toStringAsFixed(2)}",
-                style: const TextStyle(
+                style: TextStyle(
                   color: CupertinoColors.extraLightBackgroundGray, 
                   fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  fontSize: _getResponsiveFontSize(screenWidth, 16),
                 ),
                 textAlign: TextAlign.right,
               ),
@@ -316,29 +344,11 @@ class CommoditiesList extends StatelessWidget {
     return CupertinoColors.systemBlue;
   }
   
-  // Widget _buildFooterInfo() {
-  //   return Container(
-  //     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-  //     color: Colors.black.withOpacity(0.2),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: const [
-  //         Icon(
-  //           CupertinoIcons.info_circle,
-  //           color: CupertinoColors.systemGrey,
-  //           size: 14,
-  //         ),
-  //         SizedBox(width: 8),
-  //         Text(
-  //           "Prices are indicative and subject to change",
-  //           style: TextStyle(
-  //             color: CupertinoColors.systemGrey,
-  //             fontSize: 12,
-  //             fontWeight: FontWeight.w500,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  // Helper method for responsive font sizing
+  double _getResponsiveFontSize(double screenWidth, double baseSize) {
+    if (screenWidth < 320) return baseSize * 0.8;
+    if (screenWidth < 375) return baseSize * 0.9;
+    if (screenWidth > 500) return baseSize * 1.1;
+    return baseSize;
+  }
 }
