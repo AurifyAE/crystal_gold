@@ -21,6 +21,7 @@ class MainView extends StatelessWidget {
 
     return Scaffold(
       body: Navigator(
+        
         key: Get.nestedKey(1),
         initialRoute: navigationController.routes[0],
         onGenerateRoute: (settings) {
@@ -47,7 +48,7 @@ class MainView extends StatelessWidget {
 
           return GetPageRoute(
             page: () => page,
-            transition: Transition.native,  
+            transition: Transition.fade,  
             transitionDuration: const Duration(milliseconds: 300),
             settings: settings,
           );

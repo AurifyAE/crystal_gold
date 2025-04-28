@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../core/constants/app_color.dart';
 import '../../core/controllers/news_controller.dart';
 import '../widgets/news/news_card.dart';
 import 'news_detail_view.dart';
@@ -22,11 +23,11 @@ class NewsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemBackground,
+      backgroundColor: kCaccent,
       navigationBar: const CupertinoNavigationBar(
         automaticallyImplyLeading: false,
 
-        middle: Text('Breaking News'),
+        middle: Text('Breaking News', style: TextStyle(color: kCprimary),),
         brightness: Brightness.light,
         backgroundColor: CupertinoColors.systemBackground,
         border: Border(bottom: BorderSide(color: CupertinoColors.separator, width: 0.5)),

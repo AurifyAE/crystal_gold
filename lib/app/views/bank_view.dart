@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import '../../core/constants/app_color.dart';
 import '../../core/controllers/bank_controller.dart';
 
 class BankView extends StatelessWidget {
@@ -12,12 +13,13 @@ class BankView extends StatelessWidget {
     final controller = Get.find<BankController>();
     
     return CupertinoPageScaffold(
+      
       navigationBar: const CupertinoNavigationBar(
         automaticallyImplyLeading: false,
-        middle: Text('Bank Details'),
+        middle: Text('Bank Details',style: TextStyle(color: kCprimary),),
         backgroundColor: CupertinoColors.systemBackground,
       ),
-      backgroundColor: CupertinoColors.systemBackground,
+      backgroundColor: kCaccent,
       child: SafeArea(
         child: Center(
           child: Obx(() => Column(
@@ -39,7 +41,7 @@ class BankView extends StatelessWidget {
                   overflow: TextOverflow.clip,
                   style: TextStyle(
                     fontSize: 15,
-                    color: CupertinoColors.secondaryLabel, 
+                    color: const Color.fromARGB(255, 179, 179, 179), 
                   ),
                 ),
               ),

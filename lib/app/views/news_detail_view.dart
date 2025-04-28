@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import '../../core/constants/app_color.dart';
 import '../../core/models/news_model.dart';
-// import '../models/news_model.dart';
 
 class NewsDetailsView extends StatelessWidget {
   final NewsItem newsItem;
@@ -11,14 +11,53 @@ class NewsDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemBackground,
-      navigationBar: CupertinoNavigationBar(
-        // automaticallyImplyLeading: false,
+    // Create new instances of text widgets without decoration
+    final title = RichText(
+      text: TextSpan(
+        text: newsItem.title,
+        style: const TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold, 
+          color: Colors.white,
+          letterSpacing: -0.5,
+          decoration: TextDecoration.none, // Explicitly remove decoration
+          backgroundColor: Colors.transparent, // Remove any background color
+        ),
+      ),
+    );
 
+    final dateText = Text(
+      DateFormat('MMMM dd, yyyy • hh:mm a').format(newsItem.createdAt),
+      style: const TextStyle(
+        fontSize: 15,
+        color: Colors.white70,
+        decoration: TextDecoration.none,
+      ),
+    );
+
+    final description = RichText(
+      text: TextSpan(
+        text: newsItem.description,
+        style: const TextStyle(
+          fontSize: 17,
+          color: Colors.white,
+          height: 1.4,
+          letterSpacing: -0.3,
+          decoration: TextDecoration.none, // Explicitly remove decoration
+          backgroundColor: Colors.transparent, // Remove any background color
+        ),
+      ),
+    );
+
+    return CupertinoPageScaffold(
+      backgroundColor: kCaccent,
+      navigationBar: CupertinoNavigationBar(
         previousPageTitle: 'News',
-        backgroundColor: CupertinoColors.systemBackground,
-        border: const Border(bottom: BorderSide(color: CupertinoColors.separator, width: 0.5)),
+        backgroundColor: kCaccent,
+        border: const Border(bottom: BorderSide(color: Colors.transparent)),
+        leading: const CupertinoNavigationBarBackButton(
+          color: Colors.white,
+        ),
       ),
       child: SafeArea(
         child: SingleChildScrollView(
@@ -27,33 +66,11 @@ class NewsDetailsView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  newsItem.title,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: CupertinoColors.label,
-                    letterSpacing: -0.5,
-                  ),
-                ),
+                title,
                 const SizedBox(height: 8),
-                Text(
-                  DateFormat('MMMM dd, yyyy • hh:mm a').format(newsItem.createdAt),
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: CupertinoColors.secondaryLabel,
-                  ),
-                ),
+                dateText,
                 const SizedBox(height: 20),
-                Text(
-                  newsItem.description,
-                  style: const TextStyle(
-                    fontSize: 17,
-                    color: CupertinoColors.label,
-                    height: 1.4,
-                    letterSpacing: -0.3,
-                  ),
-                ),
+                description,
               ],
             ),
           ),

@@ -17,7 +17,7 @@ class RateAlertView extends StatelessWidget {
     final CurrencyController controller = Get.find<CurrencyController>();
 
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground,
+      backgroundColor: kCaccent,
       navigationBar: const CupertinoNavigationBar(
         automaticallyImplyLeading: false,
 
@@ -25,6 +25,7 @@ class RateAlertView extends StatelessWidget {
           'Set Gold Rate Alert',
           style: TextStyle(
             fontWeight: FontWeight.w600,
+            color: kCprimary
           ),
         ),
         backgroundColor: CupertinoColors.systemBackground,
@@ -47,15 +48,15 @@ class RateAlertView extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: CupertinoColors.systemBackground,
+                  color: const Color.fromARGB(50, 255, 255, 255),
                   borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: CupertinoColors.systemGrey5,
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: CupertinoColors.systemGrey5,
+                  //     blurRadius: 5,
+                  //     offset: Offset(0, 2),
+                  //   ),
+                  // ],
                 ),
                 child: Column(
                   children: [
@@ -240,7 +241,7 @@ class RateAlertView extends StatelessWidget {
                       child: Text(
                         'No alerts set',
                         style: TextStyle(
-                          color: CupertinoColors.secondaryLabel,
+                          color: const Color.fromARGB(153, 102, 102, 102),
                           fontSize: 16,
                         ),
                       ),

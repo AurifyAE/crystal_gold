@@ -20,7 +20,7 @@ class NewsItemWidgetIOS extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: CupertinoColors.systemBackground,
+        // color: CupertinoColors.systemBackground,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -29,7 +29,7 @@ class NewsItemWidgetIOS extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
-                color: CupertinoColors.label,
+                color: Color.fromARGB(255, 255, 255, 255),
                 letterSpacing: -0.3,
               ),
               maxLines: 2,
@@ -40,7 +40,7 @@ class NewsItemWidgetIOS extends StatelessWidget {
               DateFormat('MMM dd, yyyy').format(newsItem.createdAt),
               style: const TextStyle(
                 fontSize: 14,
-                color: CupertinoColors.secondaryLabel,
+                color: Color.fromARGB(153, 190, 190, 190),
               ),
             ),
             const SizedBox(height: 6),
@@ -48,7 +48,7 @@ class NewsItemWidgetIOS extends StatelessWidget {
               newsItem.description,
               style: const TextStyle(
                 fontSize: 15,
-                color: CupertinoColors.secondaryLabel,
+                color: Color.fromARGB(153, 190, 190, 190),
                 height: 1.3,
               ),
               maxLines: 2,
@@ -62,14 +62,14 @@ class NewsItemWidgetIOS extends StatelessWidget {
                   'Read more',
                   style: TextStyle(
                     fontSize: 14,
-                    color: CupertinoColors.activeBlue,
+                    color: Color.fromARGB(255, 190, 190, 190),
                   ),
                 ),
                 SizedBox(width: 4),
                 Icon(
                   CupertinoIcons.chevron_right,
                   size: 14,
-                  color: CupertinoColors.activeBlue,
+                  color: Color.fromARGB(255, 190, 190, 190),
                 ),
               ],
             ),

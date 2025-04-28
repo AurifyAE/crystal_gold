@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 // import '../controllers/contact_controller.dart';
 import '../../core/constants/app_assets.dart';
+import '../../core/constants/app_color.dart';
 import '../../core/controllers/contact_controller.dart';
 
 // import '../widgets/global/custom_appbar.dart';
@@ -34,9 +35,10 @@ class ContactView extends GetView<ContactController> {
           '24/7 Customer Support',
           style: TextStyle(
             fontWeight: FontWeight.w600,
+            color: kCprimary
           ),
         ),
-        backgroundColor: CupertinoColors.systemBackground,
+        backgroundColor: kCaccent,
         border: Border(
           bottom: BorderSide(
             color: CupertinoColors.systemGrey4,
@@ -44,10 +46,10 @@ class ContactView extends GetView<ContactController> {
           ),
         ),
       ),
-      backgroundColor: CupertinoColors.systemGroupedBackground,
+      backgroundColor: kCaccent,
       child: Obx(() {
         if (controller.isLoading.value) {
-          return Center(child: CupertinoActivityIndicator());
+          return Center(child: CupertinoActivityIndicator(color: kCprimary,));
         }
 
         if (controller.contactInfo.value == null) {
@@ -80,15 +82,15 @@ class ContactView extends GetView<ContactController> {
                   margin: const EdgeInsets.symmetric(horizontal: 20.0),
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemBackground,
+                    color: const Color.fromARGB(50, 255, 255, 255),
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: CupertinoColors.systemGrey5,
-                        blurRadius: 5,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: CupertinoColors.systemGrey5,
+                    //     blurRadius: 5,
+                    //     offset: Offset(0, 2),
+                    //   ),
+                    // ],
                   ),
                   child: Text(
                     'We\'re here to help with any Gold Rate inquiries, support, or feedback. Please contact us via the following channels:',
@@ -96,7 +98,7 @@ class ContactView extends GetView<ContactController> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: CupertinoColors.label,
+                      color: CupertinoColors.lightBackgroundGray,
                     ),
                   ),
                 ),
@@ -107,7 +109,7 @@ class ContactView extends GetView<ContactController> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16.0),
                   decoration: BoxDecoration(
-                    color: CupertinoColors.systemBackground,
+                    color: const Color.fromARGB(50, 255, 255, 255),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: _buildContactList(),
@@ -170,14 +172,14 @@ class ContactView extends GetView<ContactController> {
           leading: Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: CupertinoColors.systemGrey6,
+              color: const Color.fromARGB(97, 242, 242, 247),
               borderRadius: BorderRadius.circular(8),
             ),
             child: SvgPicture.asset(
               icon,
               height: 24,
               // ignore: deprecated_member_use
-              color: CupertinoColors.activeBlue,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
           title: Text(
@@ -185,12 +187,13 @@ class ContactView extends GetView<ContactController> {
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 16,
+              color: kCprimary
             ),
           ),
           subtitle: Text(
             subtitle,
             style: TextStyle(
-              color: CupertinoColors.secondaryLabel,
+              color: const Color.fromARGB(153, 167, 167, 167),
               fontSize: 14,
             ),
           ),

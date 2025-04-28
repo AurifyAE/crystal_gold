@@ -62,8 +62,8 @@ class SpotRateView extends StatelessWidget {
                     padding: EdgeInsets.only(
                       top: sectionSpacing, 
                       bottom: sectionSpacing * 0.8,
-                      left: sidePadding * 0.8,
-                      right: sidePadding * 0.8
+                      // left: sidePadding * 0.8,
+                      // right: sidePadding * 0.8
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,8 +105,8 @@ class SpotRateView extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.only(
                       top: sectionSpacing,
-                      left: sidePadding * 0.8,
-                      right: sidePadding * 0.8
+                      // left: sidePadding * 0.8,
+                      // right: sidePadding * 0.8
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

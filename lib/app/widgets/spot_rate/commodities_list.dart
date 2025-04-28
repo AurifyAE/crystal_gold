@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart'; // Import for number formatting
 
+import '../../../core/constants/app_color.dart';
 import '../../../core/controllers/live_controller.dart';
 import '../../../core/controllers/live_rate_controller.dart';
 import 'commodity_calculator.dart';
@@ -23,7 +24,7 @@ class CommoditiesList extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(60, 255, 255, 255),
+          color: kCaccent  , 
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -117,7 +118,7 @@ class CommoditiesList extends StatelessWidget {
     final gmGold9999 = commodityService.findOrCreateCommodity(commodities, 'Gold', 'GM', 9999);
     final kgGold995 = commodityService.findOrCreateCommodity(commodities, 'Gold', 'KG', 995);
     final kgGold9999 = commodityService.findOrCreateCommodity(commodities, 'Gold', 'KG', 9999);
-
+ 
     final commoditiesList = [
       {
         'name': 'Gold Ten TOLA',

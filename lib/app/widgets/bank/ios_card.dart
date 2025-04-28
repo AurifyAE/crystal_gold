@@ -1,3 +1,4 @@
+import 'package:crystal_gold/core/constants/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +15,7 @@ class IOSBankCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: CupertinoListSection.insetGrouped(
-        backgroundColor: CupertinoColors.systemGroupedBackground,
+        backgroundColor: const Color.fromARGB(0, 9, 9, 206),
         margin: EdgeInsets.zero,
         header: Row(
           children: [
@@ -44,13 +45,14 @@ class IOSBankCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                  ),
+                    color: kCprimary
+                   ),
                 ),
                 Text(
                   'Account Holder: ${bankDetails.holderName}',
                   style: const TextStyle(
                     fontSize: 14,
-                    color: CupertinoColors.secondaryLabel,
+                    color: Color.fromARGB(255, 189, 189, 189),
                   ),
                 ),
               ],
@@ -71,57 +73,62 @@ class IOSBankCard extends StatelessWidget {
   }
   
   Widget _buildDetailRow(String label, String value, bool canCopy, BuildContext context) {
-    return CupertinoListTile(
-      title: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 15,
-          color: CupertinoColors.secondaryLabel,
-        ),
+  return CupertinoListTile(
+    title: Text(
+      label,
+      style: const TextStyle(
+        fontSize: 15,
+        color: CupertinoColors.secondaryLabel,
       ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            value,
+    ),
+    trailing: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Replace Text with RichText to ensure no decoration is applied
+        RichText(
+          text: TextSpan(
+            text: value,
             style: const TextStyle(
               fontSize: 15,
               color: CupertinoColors.label,
+              decoration: TextDecoration.none,
+              backgroundColor: Colors.transparent,
             ),
           ),
-          if(canCopy)
-          SizedBox(width: 20,),
-          if (canCopy)
-            CupertinoButton(
-              padding: EdgeInsets.zero,
-              minSize: 0,
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: value));
-                showCupertinoModalPopup(
-                  context: context,
-                  builder: (BuildContext context) => CupertinoActionSheet(
-                    title: const Text('Copied to Clipboard'),
-                    message: Text('$label has been copied to clipboard.'),
-                    actions: [
-                      CupertinoActionSheetAction(
-                        isDefaultAction: true,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              child: const Icon(
-                CupertinoIcons.doc_on_doc,
-                size: 18,
-                color: CupertinoColors.activeBlue,
-              ),
+        ),
+        if(canCopy)
+        const SizedBox(width: 20),
+        if (canCopy)
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            minSize: 0,
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: value));
+              showCupertinoModalPopup(
+                context: context,
+                builder: (BuildContext context) => CupertinoActionSheet(
+                  title: const Text('Copied to Clipboard'),
+                  message: Text('$label has been copied to clipboard.'),
+                  actions: [
+                    CupertinoActionSheetAction(
+                      isDefaultAction: true,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            },
+            child: const Icon(
+              CupertinoIcons.doc_on_doc,
+              size: 18,
+              color: CupertinoColors.activeBlue,
             ),
-        ],
-      ),
-    );
-  }
+          ),
+      ],
+    ),
+  );
+}
 }

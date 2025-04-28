@@ -1,3 +1,4 @@
+import 'package:crystal_gold/core/constants/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,11 +16,14 @@ class BankDetailsView extends StatelessWidget {
     
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: const Text('Bank Details'),
+        middle: const Text('Bank Details', style: TextStyle(color: kCprimary),),
         backgroundColor: CupertinoColors.systemBackground,
-        previousPageTitle: 'Back', // iOS-style back button text
+        previousPageTitle: 'Back', 
+        leading: const CupertinoNavigationBarBackButton(
+          color: Colors.white,
+        ), // iOS-style back button text
       ),
-      backgroundColor: CupertinoColors.systemGroupedBackground, // iOS grouped background color
+      backgroundColor: kCaccent,  // iOS grouped background color
       child: SafeArea(
         child: Obx(() {
           if (controller.isLoading.value) {
@@ -63,7 +67,7 @@ class BankDetailsView extends StatelessWidget {
                     'No bank details available',
                     style: TextStyle(
                       fontSize: 18,
-                      color: CupertinoColors.systemGrey,
+                      color: Color.fromARGB(255, 212, 212, 212),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -72,7 +76,7 @@ class BankDetailsView extends StatelessWidget {
                     'Your bank information will appear here',
                     style: TextStyle(
                       fontSize: 14,
-                      color: CupertinoColors.systemGrey,
+                      color: Color.fromARGB(255, 212, 212, 212),
                     ),
                   ),
                 ],

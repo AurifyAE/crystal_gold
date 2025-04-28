@@ -1,3 +1,4 @@
+import 'package:crystal_gold/core/constants/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +39,7 @@ class SpotRatesWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
             child: Container(
               decoration: BoxDecoration(
-                color: const Color.fromARGB(60, 255, 255, 255),
+                color: kCaccent,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -109,10 +110,14 @@ class SpotRatesWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        CupertinoIcons.arrow_down_left_square_fill,
-                        color: CupertinoColors.activeBlue,
-                        size: screenWidth * 0.04,
+                      
+                      Text(
+                        '\$', 
+                        style: TextStyle(
+                          fontSize: _getAdaptiveFontSize(screenWidth, 16),
+                          fontWeight: FontWeight.w600,
+                          color: CupertinoColors.white,
+                        ),
                       ),
                       SizedBox(width: screenWidth * 0.015),
                       Text(
@@ -130,10 +135,13 @@ class SpotRatesWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        CupertinoIcons.arrow_up_right_square_fill,
-                        color: CupertinoColors.activeGreen,
-                        size: screenWidth * 0.04,
+                      Text(
+                        '\$', 
+                        style: TextStyle(
+                          fontSize: _getAdaptiveFontSize(screenWidth, 16),
+                          fontWeight: FontWeight.w600,
+                          color: CupertinoColors.white,
+                        ),
                       ),
                       SizedBox(width: screenWidth * 0.015),
                       Text(
@@ -170,7 +178,7 @@ class SpotRatesWidget extends StatelessWidget {
                 Container(
                   width: screenWidth * 0.2,
                   child: _buildAssetWithLabel(
-                    kIgold, 
+                    kIcoin,  
                     'GOLD', 
                     iconSize, 
                     screenWidth
