@@ -275,7 +275,7 @@ class CommoditiesList extends StatelessWidget {
       
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: screenHeight * 0.02, 
+        vertical: screenHeight * 0.01, 
         horizontal: screenWidth * 0.05
       ),
       color: index.isEven 

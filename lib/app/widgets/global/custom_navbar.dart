@@ -42,7 +42,7 @@ class CustomNavBar extends StatelessWidget {
     return Container(
       height: 80, // Increased height
       decoration: const BoxDecoration(
-        color: CupertinoColors.systemBackground,
+        color: kCaccent,
         border: Border(
           top: BorderSide(
             color: CupertinoColors.systemGrey5,
@@ -68,7 +68,7 @@ class CustomNavBar extends StatelessWidget {
                     navItems[index].icon,
                     size: 22, // Decreased icon size
                     color: isActive 
-                        ? kCaccent  
+                        ? kCprimary  
                         : CupertinoColors.systemGrey,
                   ),
                   const SizedBox(height: 6),
@@ -77,7 +77,7 @@ class CustomNavBar extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       color: isActive 
-                          ? kCaccent
+                          ? kCprimary
                           : CupertinoColors.systemGrey,
                     ),
                   ),

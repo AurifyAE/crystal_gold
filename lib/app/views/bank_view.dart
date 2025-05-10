@@ -66,6 +66,8 @@ class BankView extends StatelessWidget {
               controller.isLoading.value
                 ? const CupertinoActivityIndicator(radius: 15)
                 : CupertinoButton.filled(
+                  
+                    // focusColor: kCaccent, 
                     borderRadius: BorderRadius.circular(10),
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                     onPressed: () => controller.fetchBankDetails(),
