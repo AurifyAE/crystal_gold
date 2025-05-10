@@ -1,4 +1,4 @@
-package com.example.crystal_gold
+package com.aurify.crystal
 
 import io.flutter.embedding.android.FlutterActivity
 
