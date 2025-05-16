@@ -1,7 +1,7 @@
 import 'package:crystal_gold/core/constants/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:upgrader/upgrader.dart';
+// import 'package:upgrader/upgrader.dart';
 
 import '../widgets/spot_rate/commodities_list.dart';
 import '../widgets/spot_rate/date_time_widget.dart';
@@ -20,18 +20,16 @@ class SpotRateView extends StatelessWidget {
     final sidePadding = screenWidth * 0.04; // 4% of screen width
     final sectionSpacing = screenHeight * 0.01; // 1% of screen height
     
-    final upgrader = Upgrader(
-      durationUntilAlertAgain: const Duration(days: 3),
-      showIgnore: true,
-      showLater: true,
-      debugDisplayAlways: false,
-    );
+    // final upgrader = Upgrader(
+    //   durationUntilAlertAgain: const Duration(days: 3),
+    //   showIgnore: true,
+    //   showLater: true,
+    //   debugDisplayAlways: false,
+    // );
 
     return CupertinoPageScaffold(
       backgroundColor: kCaccent,
-      child: UpgradeAlert(
-        upgrader: upgrader,
-        child: SafeArea(
+      child: SafeArea(
           child: Container(
             padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
             decoration: BoxDecoration(
@@ -145,8 +143,8 @@ class SpotRateView extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
+    
   }
   double _getAdaptiveFontSize(double screenWidth, double baseSize) {
     if (screenWidth < 320) return baseSize * 0.8;
