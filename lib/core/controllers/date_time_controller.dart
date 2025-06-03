@@ -22,7 +22,7 @@ class DateTimeController extends GetxController {
     DateTime now = DateTime.now();
     // Format as "Apr 23"
     shortDate.value = DateFormat('MMM d').format(now);
-    // Format as "Wednesday"
+    // Format as "Wednesday"∏
     dayOfWeek.value = DateFormat('EEEE').format(now);
     // Time without AM/PM
     time.value = DateFormat('hh:mm').format(now);

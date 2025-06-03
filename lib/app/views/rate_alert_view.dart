@@ -61,113 +61,154 @@ class RateAlertView extends StatelessWidget {
                 child: Column(
                   children: [
                     Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        // Gold coin image
-                        Image.asset(
-                          kIcoin,
-                          width: 160,
-                          height: 160,
-                          fit: BoxFit.contain,
-                          errorBuilder: (context, error, stackTrace) {
-                            // Fallback if image is not found
-                            return Container(
-                              width: 160,
-                              height: 160,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFEEC96C),
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: const Color(0xFFD4AF37),
-                                  width: 2,
+              alignment: Alignment.center,
+              children: [
+                // Gold coin image
+                Image.asset(
+                  kIcoin, // Replace with your actual asset path  
+                  width: 200,
+                  height: 200,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    // Fallback if image is not found
+                    return Container(
+                      width: 180,
+                      height: 180,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFEEC96C), // Gold color
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: const Color(0xFFD4AF37), // Darker gold
+                          width: 2,
+                        ),
+                        gradient: const RadialGradient(
+                          colors: [
+                            Color(0xFFF5D76E), // Light gold
+                            Color(0xFFD4AF37), // Darker gold
+                          ],
+                          radius: 0.8,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                // Rate text overlay on the coin
+                Obx(() {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start, 
+                          children: [
+                            GestureDetector(
+                              onTap: controller.showEditRateDialog,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, 
+                                  vertical: 10
                                 ),
-                                gradient: const RadialGradient(
-                                  colors: [
-                                    Color(0xFFF5D76E),
-                                    Color(0xFFD4AF37),
-                                  ],
-                                  radius: 0.8,
+                                decoration: BoxDecoration(
+                                  // color: controller.isUserDefinedMode.value
+                                  //     ? Colors.green.withOpacity(0.1)
+                                  //     : const Color.fromARGB(0, 214, 16, 16).withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Text(
+                                  '\$ ${controller.userDefinedRate.value.toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: controller.isUserDefinedMode.value
+                                        ? Colors.green
+                                        : kCsecondary, 
+                                  ),
                                 ),
                               ),
-                            );
-                          },
+                            ),
+                            // const SizedBox(height: 10),
+                            if (controller.isUserDefinedMode.value)
+                              IconButton(
+                                iconSize: 20,
+      
+                                icon:  Icon(Icons.refresh, 
+                                    color: kCsecondary ), 
+                                onPressed: controller.resetToSpotRate,
+                              ),
+                          ],
                         ),
-                        // Rate text overlay on the coin
-                        Obx(() => Text(
-                          controller.userDefinedRate.value.toStringAsFixed(2),
-                          style: const TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.w600,
-                            color: CupertinoColors.black,
-                          ),
-                        )),
-                      ],
-                    ),
+                      );
+                    })
+              ],
+            ),
                     const SizedBox(height: 24),
                     
                     // Rate adjustment controls
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Decrease button
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: controller.decrementRate,
-                          child: Container(
-                            width: 44,
-                            height: 44,
-                            decoration: BoxDecoration(
-                              color: CupertinoColors.systemBlue,
-                              borderRadius: BorderRadius.circular(22),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Decrease button
+                GestureDetector(
+                        onTap: controller.decrementRate,
+                        onLongPress: controller.showIncrementAdjustDialog,
+                        child: Obx(() {
+                          return Container(
+                            width: 50,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                '-50',
-                                style: TextStyle(
-                                  color: CupertinoColors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15,
+                                '${controller.incrementValue.value}-',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        // Current spot rate
-                        Obx(() => Text(
-                          controller.originalSpotRate.value.toStringAsFixed(2),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: CupertinoColors.label,
-                          ),
-                        )),
-                        const SizedBox(width: 20),
-                        // Increase button
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: controller.incrementRate, 
-                          child: Container(
-                            width: 44,
-                            height: 44,
-                            decoration: BoxDecoration(
-                              color: CupertinoColors.systemBlue,
-                              borderRadius: BorderRadius.circular(22),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                '+50',
-                                style: TextStyle(
-                                  color: CupertinoColors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                          );
+                        }),
+                      ),
+                const SizedBox(width: 20),
+                // Current spot rate
+                Obx(
+                  () => Text(
+                    controller.originalSpotRate.value.toStringAsFixed(2),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: kCprimary,
                     ),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                // Increase button
+                GestureDetector(
+                        onTap: controller.incrementRate,
+                        onLongPress: controller.showIncrementAdjustDialog,
+                        child: Obx(() {
+                          return Container(
+                            width: 50,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${controller.incrementValue.value}+',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+              ],
+            ),
                   ],
                 ),
               ),

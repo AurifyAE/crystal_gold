@@ -1,4 +1,5 @@
 import 'package:crystal_gold/core/bindings/initial_binding.dart';
+import 'package:crystal_gold/core/constants/app_color.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -75,8 +76,13 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'Crystal Gold',
           // theme: ThemeData(fontFamily: 'Poppins'), 
+           theme: ThemeData(
+            useMaterial3: true, 
+    
+    colorSchemeSeed: kCaccent, // or any color you like
+  ), 
           themeMode: ThemeMode.system,
-          debugShowCheckedModeBanner: false,
+          debugShowCheckedModeBanner: false, 
           initialRoute: AppRoutes.splash,
           initialBinding: CurrencyBinding(),
           getPages: AppRouteManagement.pages,
