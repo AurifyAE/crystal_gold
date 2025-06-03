@@ -1,11 +1,13 @@
 import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class DateTimeController extends GetxController {
-  RxString formattedDay = ''.obs;
-  RxString formattedDate = ''.obs;
-  RxString formattedTime = ''.obs;
+  RxString shortDate = ''.obs;
+  RxString dayOfWeek = ''.obs;
+  RxString time = ''.obs;
+  RxString period = ''.obs;
 
   @override
   void onInit() {
@@ -18,8 +20,18 @@ class DateTimeController extends GetxController {
 
   void _updateDateTime() {
     DateTime now = DateTime.now();
-    formattedDay.value = DateFormat('EEEE').format(now);
-    formattedDate.value = DateFormat('MMM d').format(now);
-    formattedTime.value = DateFormat('HH:mm').format(now);
+    // Format as "Apr 23"
+    shortDate.value = DateFormat('MMM d').format(now);
+    // Format as "Wednesday"
+    dayOfWeek.value = DateFormat('EEEE').format(now);
+    // Time without AM/PM
+    time.value = DateFormat('hh:mm').format(now);
+    // AM/PM period
+    period.value = DateFormat('a').format(now);
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 }

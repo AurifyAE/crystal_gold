@@ -35,26 +35,26 @@ class DateTimeWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      dateTimeController.formattedDay.value,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: CupertinoColors.systemGrey,
-                      ),
-                    ),
+  dateTimeController.dayOfWeek.value,
+  style: const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: CupertinoColors.systemGrey,
+  ),
+),
                   ],
                 ),
                 const SizedBox(height: 4),
                 Padding(
                   padding: const EdgeInsets.only(left: 22),
-                  child: Text(
-                    dateTimeController.formattedDate.value,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: CupertinoColors.white,
-                    ),
-                  ),
+                  child:  Text(
+  dateTimeController.shortDate.value,
+  style: const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: CupertinoColors.white,
+  ),
+),
                 ),
               ],
             ),
@@ -93,14 +93,14 @@ class DateTimeWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  dateTimeController.formattedTime.value,
-                  textAlign: TextAlign.right,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: CupertinoColors.activeBlue,
-                  ),
-                ),
+  '${dateTimeController.time.value} ${dateTimeController.period.value}',
+  textAlign: TextAlign.right,
+  style: const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: CupertinoColors.activeBlue,
+  ),
+),
               ],
             ),
           ),
