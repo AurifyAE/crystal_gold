@@ -322,50 +322,54 @@ Get.dialog(
     debugPrint('Showing edit rate dialog, current value: ${userDefinedRate.value}');
     
     Get.dialog(
-      AlertDialog(
-        
-        title: const Text('Set Custom Rate'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Enter your custom alert rate'),
-            const SizedBox(height: 20),
-            TextField(
-              controller: textController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(
-                labelText: 'Rate',
-                border: OutlineInputBorder(),
-                suffixText: 'USD',
-              ),
-              autofocus: true,
-            ),
-          ],
+      CupertinoAlertDialog(
+      title: const Text('Set Custom Rate'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min, 
+        children: [
+        const Text('Enter your custom alert rate'),
+        const SizedBox(height: 20),
+        CupertinoTextField(
+          controller: textController,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          placeholder: 'Rate',
+          prefix: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: Text('\$'),
+          ),
+          suffix: const Padding(
+          padding: EdgeInsets.only(right: 8.0),
+          child: Text('USD'),
+          ),
+          autofocus: true,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              try {
-                final newRate = double.parse(textController.text);
-                if (newRate > 0) {
-                  userDefinedRate.value = newRate;
-                  isUserDefinedMode.value = true;
-                  debugPrint('Custom rate set to: $newRate');
-                  Get.back();
-                } else {
-                  Get.snackbar('Error', 'Rate must be greater than zero');
-                }
-              } catch (e) {
-                Get.snackbar('Error', 'Please enter a valid number');
-              }
-            },
-            child: const Text('Save'),
-          ),
         ],
+      ),
+      actions: [
+        CupertinoDialogAction(
+        onPressed: () => Get.back(),
+        child: const Text('Cancel'),
+        ),
+        CupertinoDialogAction(
+        isDefaultAction: true,
+        onPressed: () {
+          try {
+          final newRate = double.parse(textController.text);
+          if (newRate > 0) {
+            userDefinedRate.value = newRate;
+            isUserDefinedMode.value = true;
+            debugPrint('Custom rate set to: $newRate');
+            Get.back();
+          } else {
+            Get.snackbar('Error', 'Rate must be greater than zero');
+          }
+          } catch (e) {
+          Get.snackbar('Error', 'Please enter a valid number');
+          }
+        },
+        child: const Text('Save'),
+        ),
+      ],
       ),
     );
   }

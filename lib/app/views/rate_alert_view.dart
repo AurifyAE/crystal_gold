@@ -261,8 +261,8 @@ class RateAlertView extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
-                          color: CupertinoColors.label,
-                        ),
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ), 
                       ),
                       Text(
                         'Swipe to delete',
@@ -345,7 +345,7 @@ class RateAlertView extends StatelessWidget {
                                   'Notification will be sent',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: CupertinoColors.secondaryLabel,
+                                    color: CupertinoColors.secondaryLabel, 
                                   ),
                                 ),
                                 // trailing: 
